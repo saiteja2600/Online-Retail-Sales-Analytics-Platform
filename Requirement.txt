@@ -1,0 +1,275 @@
+Client Requirement Document
+Project Name
+
+Online Retail Sales Analytics Platform
+
+Client Background
+
+We are an online retail business selling multiple product categories across digital channels. We want to build a modern data platform to monitor sales performance, returns, discounts, monthly revenue trends, and category-level business insights.
+
+Currently, our sales data is available from two different source datasets:
+
+Dataset 1: Product-Level Sales
+
+Contains fields such as:
+
+Product Type
+
+Net Quantity
+
+Gross Sales
+
+Discounts
+
+Returns
+
+Total Net Sales
+
+Dataset 2: Monthly Business Summary
+
+Contains fields such as:
+
+Month
+
+Year
+
+Total Orders
+
+Gross Sales
+
+Discounts
+
+Returns
+
+Net Sales
+
+Shipping
+
+Total Sales
+
+We need a data engineering solution that can ingest, process, store, and expose this data for analytics and dashboarding.
+
+Business Goal
+
+The goal is to create an end-to-end retail sales analytics pipeline that will:
+
+Track business sales performance in near real time or batch intervals
+
+Measure category-level and monthly-level revenue trends
+
+Monitor discounts and returns impact on profitability
+
+Provide a clean SQL-ready data model for reporting
+
+Enable business users to access dashboards in Power BI
+
+Scope of Work
+1. Data Ingestion
+
+The system should ingest sales data from two business datasets into the platform.
+
+Requirement:
+
+Simulate incoming sales data events through Kafka / Azure Event Hubs
+
+Ingest both:
+
+Product-level sales records
+
+Monthly summary sales records
+
+Ensure ingestion supports scalable processing for future growth
+
+Expected Input Zones:
+
+Raw streaming or batch landing layer
+
+Metadata capture for ingestion timestamp, source name, batch ID, and record count
+
+2. Orchestration
+
+The platform should use Azure Data Factory to manage pipeline execution.
+
+Requirement:
+
+Build orchestration pipelines to:
+
+Trigger ingestion workflows
+
+Validate source availability
+
+Execute Databricks notebooks/jobs
+
+Load transformed data into Synapse
+
+Log pipeline success/failure
+
+Use Get Metadata / Get Activity to validate incoming data files or source presence
+
+Add retry and failure handling logic
+
+3. Data Transformation
+
+The transformation layer should be built in Databricks.
+
+Requirement:
+
+Create medallion-style layers:
+
+Bronze Layer
+
+Store raw ingested records as-is
+
+Preserve source structure
+
+Add ingestion audit columns:
+
+ingestion_time
+
+source_system
+
+batch_id
+
+load_date
+
+Silver Layer
+
+Clean and standardize data
+
+Handle null values
+
+Normalize numeric columns
+
+Standardize month and year values
+
+Validate negative values for discounts and returns
+
+Remove duplicates if any
+
+Apply schema consistency
+
+Gold Layer
+
+Create curated business tables for analytics:
+
+Product sales summary by category
+
+Monthly sales trend table
+
+Discount and returns KPI table
+
+Revenue contribution by product type
+
+Order and shipping performance summary
+
+4. Data Quality Rules
+
+The client expects strong data quality checks.
+
+Rules:
+
+Product Type should not be null in product-level dataset
+
+Net Quantity should be greater than or equal to 0
+
+Gross Sales should be greater than or equal to 0
+
+Discounts and Returns should follow business sign convention
+
+Month values should be valid month names
+
+Year should be valid numeric year
+
+Total Sales should equal Net Sales + Shipping where applicable
+
+Reject or flag bad records into an error table
+
+Expected Output:
+
+Valid records table
+
+Rejected records table
+
+Data quality report table
+
+5. Storage and SQL Layer
+
+The curated data should be made available in Azure Synapse Analytics.
+
+Requirement:
+
+Load final transformed gold tables into Synapse SQL tables
+
+Build SQL views for reporting teams
+
+Support performant querying for Power BI
+
+Partition or optimize data for faster access where needed
+
+Suggested Synapse Tables:
+
+fact_product_sales
+
+fact_monthly_sales
+
+fact_discount_returns
+
+dim_product_type
+
+dim_calendar
+
+6. Dashboard and Reporting
+
+The final data should be consumed in Power BI.
+
+Dashboard Requirements:
+
+The business wants dashboards for:
+
+Executive Dashboard
+
+Total Gross Sales
+
+Total Net Sales
+
+Total Sales
+
+Total Orders
+
+Total Discounts
+
+Total Returns
+
+Product Category Dashboard
+
+Sales by Product Type
+
+Quantity sold by Product Type
+
+Top performing categories
+
+Lowest performing categories
+
+Returns by category
+
+Discounts by category
+
+Monthly Trend Dashboard
+
+Month-over-month sales trend
+
+Year-over-year sales comparison
+
+Order trend over time
+
+Shipping contribution trend
+
+Profitability Impact Dashboard
+
+Discount impact on revenue
+
+Return impact on net sales
+
+Net sales vs gross sales variance
+
+Shipping contribution to total sales
