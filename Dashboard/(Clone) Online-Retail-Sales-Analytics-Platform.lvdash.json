@@ -22,7 +22,16 @@
       "name": "f23952f1",
       "displayName": "Sales Insights by Product Type",
       "queryLines": [
-        "SELECT ps.product_type, ROUND(SUM(ps.discounts), 2) AS total_discounts, ROUND(SUM(ps.returns), 2) AS total_returns, ROUND((SUM(ps.discounts) / SUM(ps.gross_sales)) * 100, 2) AS discount_percentage, ROUND((SUM(ps.returns) / SUM(ps.gross_sales)) * 100, 2) AS return_percentage FROM products_sales ps GROUP BY ps.product_type ORDER BY total_discounts LIMIT 10;"
+        "SELECT \r\n",
+        "    ps.product_type,\r\n",
+        "    ROUND(SUM(ps.discounts), 2) AS total_discounts,\r\n",
+        "    ROUND(SUM(ps.returns), 2) AS total_returns,\r\n",
+        "    ROUND((SUM(ps.discounts) / SUM(ps.gross_sales)) * 100, 2) AS discount_percentage,\r\n",
+        "    ROUND((SUM(ps.returns) / SUM(ps.gross_sales)) * 100, 2) AS return_percentage\r\n",
+        "FROM products_sales ps\r\n",
+        "GROUP BY ps.product_type\r\n",
+        "ORDER BY total_discounts\r\n",
+        "LIMIT 10;"
       ],
       "catalog": "onlineretail",
       "schema": "onlineretail_schema"
@@ -121,7 +130,7 @@
   "pages": [
     {
       "name": "d64e652a",
-      "displayName": "Online Retail Sales Analytics Platform",
+      "displayName": "Untitled page",
       "layout": [
         {
           "widget": {
@@ -174,7 +183,7 @@
                   },
                   "format": {
                     "type": "number-plain",
-                    "abbreviation": "compact",
+                    "abbreviation": "none",
                     "decimalPlaces": {
                       "type": "max",
                       "places": 2
@@ -182,16 +191,9 @@
                     "significantFigures": {
                       "type": "exact",
                       "figures": 3
-                    },
-                    "hideGroupSeparator": true,
-                    "negativeSign": "accounting"
+                    }
                   }
                 }
-              }
-            },
-            "specExtensions": {
-              "widgetBackgroundColor": {
-                "dark": "#2F80ED"
               }
             }
           },
@@ -222,11 +224,6 @@
             ],
             "spec": {
               "version": 2,
-              "style": {
-                "fontColor": {
-                  "dark": "#D9E7E7"
-                }
-              },
               "frame": {
                 "showTitle": true,
                 "title": "Total Sales",
@@ -236,13 +233,10 @@
               "encodings": {
                 "value": {
                   "fieldName": "sum(total_sales)",
-                  "style": {
-                    "bold": true,
-                    "fontSize": 28
-                  },
                   "format": {
-                    "type": "number-plain",
-                    "abbreviation": "compact",
+                    "type": "number-currency",
+                    "currencyCode": "USD",
+                    "abbreviation": "none",
                     "decimalPlaces": {
                       "type": "all"
                     },
@@ -250,15 +244,9 @@
                       "type": "exact",
                       "figures": 3
                     },
-                    "hideGroupSeparator": false,
-                    "negativeSign": "accounting"
+                    "hideGroupSeparator": false
                   }
                 }
-              }
-            },
-            "specExtensions": {
-              "widgetBackgroundColor": {
-                "dark": "#27AE60"
               }
             }
           },
@@ -289,11 +277,6 @@
             ],
             "spec": {
               "version": 2,
-              "style": {
-                "fontColor": {
-                  "dark": "#D9E7E7"
-                }
-              },
               "frame": {
                 "showTitle": true,
                 "title": "Shipping Revenue",
@@ -303,13 +286,10 @@
               "encodings": {
                 "value": {
                   "fieldName": "sum(shipping_revenue)",
-                  "style": {
-                    "bold": true,
-                    "fontSize": 28
-                  },
                   "format": {
-                    "type": "number-plain",
-                    "abbreviation": "compact",
+                    "type": "number-currency",
+                    "currencyCode": "USD",
+                    "abbreviation": "none",
                     "decimalPlaces": {
                       "type": "max",
                       "places": 2
@@ -320,11 +300,6 @@
                     }
                   }
                 }
-              }
-            },
-            "specExtensions": {
-              "widgetBackgroundColor": {
-                "dark": "#F2994A"
               }
             }
           },
@@ -355,40 +330,26 @@
             ],
             "spec": {
               "version": 2,
-              "style": {
-                "fontColor": {
-                  "dark": "#D9E7E7"
-                }
-              },
               "frame": {
                 "showTitle": true,
                 "title": "Shipping Percentage",
-                "headerAlignment": "center",
-                "showDescription": false
+                "headerAlignment": "center"
               },
               "widgetType": "counter",
               "encodings": {
                 "value": {
                   "fieldName": "sum(shipping_percentage)",
-                  "style": {
-                    "bold": true,
-                    "fontSize": 28
-                  },
                   "format": {
                     "type": "number-percent",
                     "decimalPlaces": {
-                      "type": "all"
+                      "type": "max",
+                      "places": 2
                     },
                     "significantFigures": {
                       "type": "all"
                     }
                   }
                 }
-              }
-            },
-            "specExtensions": {
-              "widgetBackgroundColor": {
-                "dark": "#EB5757"
               }
             }
           },
@@ -456,13 +417,13 @@
                 "color": {
                   "fieldName": "product_type",
                   "legend": {
-                    "position": "bottom"
+                    "position": "right"
                   },
                   "displayName": "Product Type",
                   "scale": {
                     "type": "categorical",
                     "sort": {
-                      "by": "angle-reversed"
+                      "by": "natural-order"
                     }
                   }
                 },
@@ -484,16 +445,11 @@
                   }
                 ]
               }
-            },
-            "specExtensions": {
-              "widgetBackgroundColor": {
-                "dark": "#132440"
-              }
             }
           },
           "position": {
-            "x": 4,
-            "y": 11,
+            "x": 0,
+            "y": 5,
             "width": 3,
             "height": 6
           }
@@ -512,31 +468,31 @@
                       "expression": "`month`"
                     },
                     {
-                      "name": "sum(net_sales)",
-                      "expression": "SUM(`net_sales`)"
+                      "name": "net_sales",
+                      "expression": "`net_sales`"
                     },
                     {
-                      "name": "sum(total_orders)",
-                      "expression": "SUM(`total_orders`)"
+                      "name": "total_orders",
+                      "expression": "`total_orders`"
                     },
                     {
-                      "name": "sum(gross_sales)",
-                      "expression": "SUM(`gross_sales`)"
+                      "name": "gross_sales",
+                      "expression": "`gross_sales`"
                     },
                     {
-                      "name": "sum(discount)",
-                      "expression": "SUM(`discount`)"
+                      "name": "discount",
+                      "expression": "`discount`"
                     },
                     {
-                      "name": "sum(returns)",
-                      "expression": "SUM(`returns`)"
+                      "name": "returns",
+                      "expression": "`returns`"
                     },
                     {
-                      "name": "sum(shipping)",
-                      "expression": "SUM(`shipping`)"
+                      "name": "shipping",
+                      "expression": "`shipping`"
                     }
                   ],
-                  "disaggregated": false
+                  "disaggregated": true
                 }
               }
             ],
@@ -572,9 +528,6 @@
               "encodings": {
                 "x": {
                   "fieldName": "month",
-                  "axis": {
-                    "labelAngle": 0
-                  },
                   "displayName": "Month",
                   "scale": {
                     "type": "categorical"
@@ -586,27 +539,27 @@
                   },
                   "fields": [
                     {
-                      "fieldName": "sum(net_sales)",
+                      "fieldName": "net_sales",
                       "displayName": "Net Sales"
                     },
                     {
-                      "fieldName": "sum(total_orders)",
+                      "fieldName": "total_orders",
                       "displayName": "Total Orders"
                     },
                     {
-                      "fieldName": "sum(gross_sales)",
+                      "fieldName": "gross_sales",
                       "displayName": "Gross Sales"
                     },
                     {
-                      "fieldName": "sum(discount)",
+                      "fieldName": "discount",
                       "displayName": "Discount"
                     },
                     {
-                      "fieldName": "sum(returns)",
+                      "fieldName": "returns",
                       "displayName": "Returns"
                     },
                     {
-                      "fieldName": "sum(shipping)",
+                      "fieldName": "shipping",
                       "displayName": "Shipping"
                     }
                   ]
@@ -615,16 +568,11 @@
                   "show": false
                 }
               }
-            },
-            "specExtensions": {
-              "widgetBackgroundColor": {
-                "dark": "#3B060A"
-              }
             }
           },
           "position": {
-            "x": 0,
-            "y": 11,
+            "x": 3,
+            "y": 5,
             "width": 4,
             "height": 6
           }
@@ -651,12 +599,12 @@
                       "expression": "SUM(`total_returns`)"
                     },
                     {
-                      "name": "sum(discount_percentage)",
-                      "expression": "SUM(`discount_percentage`)"
-                    },
-                    {
                       "name": "sum(return_percentage)",
                       "expression": "SUM(`return_percentage`)"
+                    },
+                    {
+                      "name": "sum(discount_percentage)",
+                      "expression": "SUM(`discount_percentage`)"
                     }
                   ],
                   "disaggregated": false
@@ -670,92 +618,51 @@
                 "showTitle": true,
                 "headerAlignment": "center"
               },
-              "mark": {
-                "layout": "stack"
-              },
               "widgetType": "bar",
               "encodings": {
                 "x": {
                   "fieldName": "product_type",
-                  "axis": {
-                    "labelAngle": 0,
-                    "hideLabels": true
-                  },
                   "displayName": "Product Type",
                   "scale": {
-                    "type": "categorical",
-                    "sort": {
-                      "by": "natural-order"
-                    }
+                    "type": "categorical"
                   }
                 },
                 "y": {
-                  "primary": {
-                    "fields": [
-                      {
-                        "fieldName": "sum(total_discounts)",
-                        "displayName": "Discounts"
-                      },
-                      {
-                        "fieldName": "sum(total_returns)",
-                        "displayName": "Returns"
-                      }
-                    ],
-                    "scale": {
-                      "type": "quantitative",
-                      "reverse": true
-                    },
-                    "format": {
-                      "type": "number-plain",
-                      "abbreviation": "compact",
-                      "decimalPlaces": {
-                        "type": "all"
-                      }
-                    }
+                  "scale": {
+                    "type": "quantitative"
                   },
-                  "secondary": {
-                    "fields": [
-                      {
-                        "fieldName": "sum(discount_percentage)",
-                        "displayName": "Discount Percentage"
-                      },
-                      {
-                        "fieldName": "sum(return_percentage)",
-                        "displayName": "Return Percentage"
-                      }
-                    ],
-                    "scale": {
-                      "type": "quantitative",
-                      "reverse": true
+                  "fields": [
+                    {
+                      "fieldName": "sum(total_discounts)",
+                      "displayName": "Discounts"
                     },
-                    "format": {
-                      "type": "number-plain",
-                      "abbreviation": "compact",
-                      "decimalPlaces": {
-                        "type": "max",
-                        "places": 2
-                      }
+                    {
+                      "fieldName": "sum(total_returns)",
+                      "displayName": "Returns"
+                    },
+                    {
+                      "fieldName": "sum(return_percentage)",
+                      "displayName": "Return Percentage"
+                    },
+                    {
+                      "fieldName": "sum(discount_percentage)",
+                      "displayName": "Discount Percentage"
                     }
-                  }
+                  ]
                 }
-              }
-            },
-            "specExtensions": {
-              "widgetBackgroundColor": {
-                "dark": "#222831"
               }
             }
           },
           "position": {
-            "x": 6,
-            "y": 5,
+            "x": 0,
+            "y": 11,
             "width": 6,
             "height": 6
           }
         },
         {
           "widget": {
-            "name": "monthly-sales-performance-1",
+            "name": "5a87879f",
             "queries": [
               {
                 "name": "main_query",
@@ -771,8 +678,8 @@
                       "expression": "SUM(`total_orders`)"
                     },
                     {
-                      "name": "avg(shipping_percentage)",
-                      "expression": "AVG(`shipping_percentage`)"
+                      "name": "sum(shipping_percentage)",
+                      "expression": "SUM(`shipping_percentage`)"
                     },
                     {
                       "name": "sum(total_sales)",
@@ -786,77 +693,41 @@
             "spec": {
               "version": 3,
               "frame": {
-                "showTitle": true,
-                "title": "Monthly Sales Performance",
-                "headerAlignment": "center"
+                "showTitle": true
               },
               "widgetType": "line",
               "encodings": {
                 "x": {
                   "fieldName": "month",
-                  "axis": {
-                    "labelAngle": 0
-                  },
-                  "displayName": "Month",
                   "scale": {
                     "type": "categorical"
                   }
                 },
                 "y": {
-                  "primary": {
-                    "fields": [
-                      {
-                        "fieldName": "sum(total_orders)",
-                        "displayName": "Orders"
-                      },
-                      {
-                        "fieldName": "avg(shipping_percentage)",
-                        "displayName": "Shipping"
-                      }
-                    ],
-                    "scale": {
-                      "type": "quantitative"
-                    },
-                    "format": {
-                      "type": "number-plain",
-                      "abbreviation": "compact",
-                      "decimalPlaces": {
-                        "type": "max",
-                        "places": 2
-                      }
-                    }
+                  "scale": {
+                    "type": "quantitative"
                   },
-                  "secondary": {
-                    "fields": [
-                      {
-                        "fieldName": "sum(total_sales)",
-                        "displayName": "Sales"
-                      }
-                    ],
-                    "scale": {
-                      "type": "quantitative"
+                  "fields": [
+                    {
+                      "fieldName": "sum(total_orders)",
+                      "displayName": "Orders"
                     },
-                    "format": {
-                      "type": "number-plain",
-                      "abbreviation": "compact",
-                      "decimalPlaces": {
-                        "type": "max",
-                        "places": 2
-                      }
+                    {
+                      "fieldName": "sum(shipping_percentage)",
+                      "displayName": "Shipping"
+                    },
+                    {
+                      "fieldName": "sum(total_sales)",
+                      "displayName": "Sales"
                     }
-                  }
+                  ]
                 }
-              }
-            },
-            "specExtensions": {
-              "widgetBackgroundColor": {
-                "dark": "#434E78"
               }
             }
           },
           "position": {
-            "x": 0,
-            "y": 5,
+            "x": 6,
+            "y": 11,
             "width": 6,
             "height": 6
           }
@@ -871,19 +742,15 @@
                   "datasetName": "44a06fa5",
                   "fields": [
                     {
-                      "name": "discount_percentage",
-                      "expression": "`discount_percentage`"
-                    },
-                    {
-                      "name": "total_net_sales",
-                      "expression": "`total_net_sales`"
+                      "name": "sum(total_net_sales)",
+                      "expression": "SUM(`total_net_sales`)"
                     },
                     {
                       "name": "product_type",
                       "expression": "`product_type`"
                     }
                   ],
-                  "disaggregated": true
+                  "disaggregated": false
                 }
               }
             ],
@@ -897,53 +764,23 @@
               "widgetType": "bar",
               "encodings": {
                 "x": {
-                  "fieldName": "total_net_sales",
-                  "format": {
-                    "type": "number-plain",
-                    "abbreviation": "compact",
-                    "decimalPlaces": {
-                      "type": "all"
-                    },
-                    "significantFigures": {
-                      "type": "all"
-                    }
-                  },
-                  "displayName": "Total Net Sales",
+                  "fieldName": "sum(total_net_sales)",
                   "scale": {
-                    "type": "quantitative",
-                    "reverse": false
+                    "type": "quantitative"
                   }
                 },
                 "y": {
                   "fieldName": "product_type",
-                  "axis": {
-                    "hideLabels": true,
-                    "hideTitle": false
-                  },
-                  "displayName": "Product Type",
                   "scale": {
-                    "type": "categorical",
-                    "sort": {
-                      "by": "natural-order"
-                    }
+                    "type": "categorical"
                   }
-                },
-                "extra": [
-                  {
-                    "fieldName": "discount_percentage"
-                  }
-                ]
-              }
-            },
-            "specExtensions": {
-              "widgetBackgroundColor": {
-                "dark": "#222831"
+                }
               }
             }
           },
           "position": {
             "x": 7,
-            "y": 11,
+            "y": 5,
             "width": 5,
             "height": 6
           }
@@ -984,8 +821,7 @@
         "#919191",
         "#BF7080"
       ],
-      "widgetHeaderAlignment": "CENTER",
-      "fontFamily": "Trebuchet MS"
+      "widgetHeaderAlignment": "LEFT"
     },
     "applyModeEnabled": false
   }
